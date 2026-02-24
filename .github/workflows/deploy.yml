@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  
+      - main
 
 permissions:
   contents: read
@@ -28,20 +28,15 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install  
+        run: npm install
 
       - name: Build
         run: npm run build
 
-      - name: Inject version
-        run: |
-          
-          VERSION=$(date +'%Y-%m-%d %H:%M')
-          sed -i "s/__VERSION__/$VERSION/g" dist/index.html || true
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          # Vite outputs to 'dist' by default
           path: dist
 
       - name: Deploy to GitHub Pages
